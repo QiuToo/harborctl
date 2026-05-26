@@ -1,0 +1,16 @@
+# Harbor CLI Configuration File
+# 
+# Default configuration for harborctl
+# Copy this file to /etc/harbor/harbor.yaml
+
+# Harbor Server Settings
+address: "192.168.2.222:80"
+
+# Authentication
+username: "admin"
+password: "Harbor123456"
+
+# Connection Options (optional)
+# scheme: "http"           # http or https
+# insecure: false         # Skip TLS verification (for self-signed certs)
+#
