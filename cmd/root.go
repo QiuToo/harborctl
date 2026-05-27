@@ -49,7 +49,10 @@ func init() {
 	viper.BindPFlag("password", rootCmd.Flags().Lookup("pass"))
 }
 
+const defaultConfigPath = "/etc/harbor/harbor.yaml"
+
 func initConfig() {
+	// Command-line flags have higher priority, so set them first
 	if addr != "" {
 		viper.Set("address", addr)
 	}
@@ -60,10 +63,21 @@ func initConfig() {
 		viper.Set("password", pass)
 	}
 
+	// If config file is specified, read from it
 	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile)
 		if err := viper.ReadInConfig(); err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: failed to read config: %v\n", err)
+		}
+	} else {
+		// Try default config path if no CLI flags provided
+		if addr == "" && user == "" && pass == "" {
+			if _, err := os.Stat(defaultConfigPath); err == nil {
+				viper.SetConfigFile(defaultConfigPath)
+				if err := viper.ReadInConfig(); err != nil {
+					fmt.Fprintf(os.Stderr, "Warning: failed to read default config: %v\n", err)
+				}
+			}
 		}
 	}
 }

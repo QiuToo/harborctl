@@ -138,7 +138,7 @@ func init() {
 	projectCmd.AddCommand(projectInspectCmd)
 
 	projectListCmd.Flags().StringP("name", "n", "", "Filter projects by name")
-	projectListCmd.Flags().IntP("page", "p", 1, "Page number")
+	projectListCmd.Flags().IntP("page", "", 1, "Page number")
 	projectListCmd.Flags().IntP("page-size", "s", 100, "Page size")
 
 	projectCreateCmd.Flags().BoolP("public", "p", false, "Create as public project")
