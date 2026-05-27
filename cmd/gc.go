@@ -9,7 +9,7 @@ import (
 
 var gcCmd = &cobra.Command{
 	Use:   "gc",
-	Short: "Garbage collection management",
+	Short: "垃圾回收管理",
 	Long:  `Commands for managing Harbor garbage collection.`,
 }
 

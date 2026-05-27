@@ -82,7 +82,7 @@ type Repository struct {
 type Artifact struct {
 	Digest           string        `json:"digest"`
 	Type            string        `json:"type"`
-	Tags            []string      `json:"tags"`
+	Tags            interface{}   `json:"tags"`
 	PushTime        time.Time     `json:"push_time"`
 	PullTime        time.Time     `json:"pull_time"`
 	Size            int64        `json:"size"`
@@ -115,14 +115,22 @@ type SystemInfo struct {
 
 // OverallHealthStatus represents health status
 type OverallHealthStatus struct {
-	Harbor      *ComponentHealth `json:"harbor,omitempty"`
-	Portal      *ComponentHealth `json:"portal,omitempty"`
-	Core        *ComponentHealth `json:"core,omitempty"`
-	Jobservice  *ComponentHealth `json:"jobservice,omitempty"`
-	Registry   *ComponentHealth `json:"registry,omitempty"`
-	Database   *ComponentHealth `json:"database,omitempty"`
-	Redis      *ComponentHealth `json:"redis,omitempty"`
-	Proxy      *ComponentHealth `json:"proxy,omitempty"`
+	Status     string           `json:"status"`
+	Components []ComponentItem `json:"components"`
+	Harbor     *ComponentHealth `json:"harbor,omitempty"`
+	Portal     *ComponentHealth `json:"portal,omitempty"`
+	Core       *ComponentHealth `json:"core,omitempty"`
+	Jobservice *ComponentHealth `json:"jobservice,omitempty"`
+	Registry  *ComponentHealth `json:"registry,omitempty"`
+	Database  *ComponentHealth `json:"database,omitempty"`
+	Redis     *ComponentHealth `json:"redis,omitempty"`
+	Proxy     *ComponentHealth `json:"proxy,omitempty"`
+}
+
+// ComponentItem represents a component in health check
+type ComponentItem struct {
+	Name   string `json:"name"`
+	Status string `json:"status"`
 }
 
 // ComponentHealth represents health of a component

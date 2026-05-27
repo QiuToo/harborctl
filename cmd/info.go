@@ -80,6 +80,19 @@ var statsCmd = &cobra.Command{
 }
 
 func printHealthStatus(health *client.OverallHealthStatus) {
+	// Handle new format with Components array
+	if len(health.Components) > 0 {
+		for _, c := range health.Components {
+			statusIcon := "✓"
+			if c.Status != "healthy" {
+				statusIcon = "✗"
+			}
+			fmt.Printf("  %s %s: %s\n", statusIcon, c.Name, c.Status)
+		}
+		return
+	}
+
+	// Fallback to old format
 	components := []struct {
 		Name   string
 		Status string

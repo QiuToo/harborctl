@@ -72,8 +72,8 @@ var repoInspectCmd = &cobra.Command{
 			fmt.Println("\nTags:")
 			for _, a := range artifacts {
 				tags := "<none>"
-				if len(a.Tags) > 0 {
-					tags = strings.Join(a.Tags, ", ")
+				if getTagsString(a.Tags) != "" {
+					tags = getTagsString(a.Tags)
 				}
 				digest := a.Digest
 				if len(digest) > 20 {
@@ -111,7 +111,7 @@ var imageListTagsCmd = &cobra.Command{
 		fmt.Printf("Tags for %s/%s:\n", projectName, repoName)
 		tagsMap := make(map[string][]string)
 		for _, a := range artifacts {
-			for _, tag := range a.Tags {
+			for _, tag := range getTagsSlice(a.Tags) {
 				tagsMap[tag] = append(tagsMap[tag], a.Digest)
 			}
 		}
@@ -158,7 +158,7 @@ Examples:
 
 		var digest string
 		for _, a := range artifacts {
-			for _, t := range a.Tags {
+			for _, t := range getTagsSlice(a.Tags) {
 				if t == tagValue {
 					digest = a.Digest
 					break
